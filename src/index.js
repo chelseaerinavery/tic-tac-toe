@@ -82,6 +82,12 @@ class Game extends React.Component {
     });
   }
 
+  handleSort() {
+    let sortedHistory = [...this.state.history];
+    this.setState({ history: sortedHistory.reverse() });
+    //default to asc, toggle to desc
+  }
+
   jumpTo(step) {
     this.setState({ stepNumber: step, xIsNext: step % 2 === 0 });
   }
@@ -92,13 +98,17 @@ class Game extends React.Component {
     const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
-      const desc = move
+      const description = move
         ? "Go to move #" + move + " at " + this.state.position[move - 1]
         : "Go to game start";
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>
-            {this.state.stepNumber === move ? <b>{desc}</b> : desc}
+            {this.state.stepNumber === move ? (
+              <b>{description}</b>
+            ) : (
+              description
+            )}
           </button>
         </li>
       );
@@ -122,6 +132,7 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <ol>{moves}</ol>
+          <button onClick={() => this.handleSort()}>↕️</button>
         </div>
       </div>
     );
