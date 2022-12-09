@@ -41,18 +41,18 @@ export function Game(props) {
     }
     let positionCopy = [...position];
     let toggle = positionCopy.reverse();
-    const revMoves = toggle.map((step, move) => {
+    const revMoves = toggle.map((step, i) => {
       const description =
-        move < toggle.length - 1
+        i < toggle.length - 1
           ? "Go to move #" +
-            String(toggle.length - move) +
+            String(toggle.length - (i + 1)) +
             " at " +
-            toggle[move]
+            toggle[i]
           : "Go to game start";
       return (
-        <li key={move}>
-          <button onClick={() => jumpTo(toggle.length - (move + 1))}>
-            {stepNumber === toggle.length - (move + 1) ? (
+        <li key={i}>
+          <button onClick={() => jumpTo(toggle.length - (i + 1))}>
+            {stepNumber === toggle.length - (i + 1) ? (
               <b>{description}</b>
             ) : (
               description
@@ -70,19 +70,20 @@ export function Game(props) {
     setXIsNext(step % 2 === 0);
   };
 
+  //toggle set moves, sets to "desc"
   useEffect(() => {
     if (sortDirection === "desc") {
       return;
     }
     setMoves(
-      historyState.map((step, move) => {
-        const description = move
-          ? "Go to move #" + move + " at " + position[move]
+      historyState.map((step, i) => {
+        const description = i
+          ? "Go to move #" + i + " at " + position[i]
           : "Go to game start";
         return (
-          <li key={move}>
-            <button onClick={() => jumpTo(move)}>
-              {stepNumber === move ? <b>{description}</b> : description}
+          <li key={i}>
+            <button onClick={() => jumpTo(i)}>
+              {stepNumber === i ? <b>{description}</b> : description}
             </button>
           </li>
         );
@@ -90,22 +91,51 @@ export function Game(props) {
     );
   }, [sortDirection]);
 
+  //initial set moves (default="asc")
   useEffect(() => {
+    if (sortDirection === "desc") {
+      let positionCopy = [...position];
+      let toggle = positionCopy.reverse();
+      const revMoves = toggle.map((step, i) => {
+        const description =
+          i < toggle.length - 1
+            ? "Go to move #" +
+              String(toggle.length - (i + 1)) +
+              " at " +
+              toggle[i]
+            : "Go to game start";
+        return (
+          <li key={i}>
+            <button onClick={() => jumpTo(toggle.length - (i + 1))}>
+              {stepNumber === toggle.length - (i + 1) ? (
+                <b>{description}</b>
+              ) : (
+                description
+              )}
+            </button>
+          </li>
+        );
+      });
+      setMoves(revMoves);
+      setSortDirection("desc");
+      return;
+    }
+
     setMoves(
-      historyState.map((step, move) => {
-        const description = move
-          ? "Go to move #" + move + " at " + position[move]
+      historyState.map((step, i) => {
+        const description = i
+          ? "Go to move #" + i + " at " + position[i]
           : "Go to game start";
         return (
-          <li key={move}>
-            <button onClick={() => jumpTo(move)}>
-              {stepNumber === move ? <b>{description}</b> : description}
+          <li key={i}>
+            <button onClick={() => jumpTo(i)}>
+              {stepNumber === i ? <b>{description}</b> : description}
             </button>
           </li>
         );
       })
     );
-  }, [historyState]);
+  }, [historyState, stepNumber]);
 
   return (
     <div className="game">
