@@ -1,7 +1,11 @@
 export function Square(props) {
-  const { onClick, value } = props;
+  const { onClick, value, winner } = props;
+
   return (
-    <button className="square" onClick={onClick}>
+    <button
+      className={`square ${winner ? "winningSquare" : ""}`}
+      onClick={onClick}
+    >
       {value}
     </button>
   );

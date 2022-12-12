@@ -15,8 +15,11 @@ export function Game(props) {
   const [sortDirection, setSortDirection] = useState("asc");
   const current = historyState[stepNumber];
   const winner = calculateWinner(current.squares);
-  const winnerText = "Winner: " + winner;
-  const noWinnerText = "Next player " + (xIsNext ? "X" : "O");
+  const gameOn = !winner?.winningUser && !current.squares.includes(null);
+  const winnerText = "Winner: " + winner?.winningUser;
+  const noWinnerText = !gameOn
+    ? "Next player " + (xIsNext ? "X" : "O")
+    : "DRAW";
   const status = winner ? winnerText : noWinnerText;
 
   const handleClick = (i) => {
@@ -140,7 +143,11 @@ export function Game(props) {
   return (
     <div className="game">
       <div className="game-board">
-        <Board squares={current.squares} onClick={(i) => handleClick(i)} />
+        <Board
+          squares={current.squares}
+          onClick={(i) => handleClick(i)}
+          winner={winner?.winningLine}
+        />
       </div>
       <div className="game-info">
         <div>{status}</div>

@@ -1,10 +1,17 @@
 import { Square } from "./Square";
 
 export function Board(props) {
-  const { squares, onClick } = props;
-
+  const { squares, onClick, winner } = props;
   const renderSquare = (i) => {
-    return <Square value={squares[i]} onClick={() => onClick(i)} />;
+    let isSquareWinner = winner?.includes(i);
+
+    return (
+      <Square
+        value={squares[i]}
+        onClick={() => onClick(i)}
+        winner={isSquareWinner}
+      />
+    );
   };
 
   return (
