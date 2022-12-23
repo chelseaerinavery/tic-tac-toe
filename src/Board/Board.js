@@ -15,7 +15,7 @@ export function Board(props) {
   };
 
   return (
-    <div>
+    <div className="board">
       {squares.map((squares, i) => {
         if (i === 0 || i === 3 || i === 6) {
           return (

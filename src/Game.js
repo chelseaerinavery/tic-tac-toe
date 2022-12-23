@@ -16,9 +16,9 @@ export function Game(props) {
   const current = historyState[stepNumber];
   const winner = calculateWinner(current.squares);
   const gameOn = !winner?.winningUser && !current.squares.includes(null);
-  const winnerText = "Winner: " + winner?.winningUser;
+  const winnerText = "Winner is " + winner?.winningUser + "!!!";
   const noWinnerText = !gameOn
-    ? "Next player " + (xIsNext ? "X" : "O")
+    ? "Next player: " + (xIsNext ? "X" : "O")
     : "DRAW";
   const status = winner ? winnerText : noWinnerText;
 
@@ -142,6 +142,7 @@ export function Game(props) {
 
   return (
     <div className="game">
+      <div className="header">Tic-Tac-Toe</div>
       <div className="game-board">
         <Board
           squares={current.squares}
@@ -150,9 +151,11 @@ export function Game(props) {
         />
       </div>
       <div className="game-info">
-        <div>{status}</div>
+        <div className="status">{status}</div>
         <ol>{moves}</ol>
-        <button onClick={handleSort}>↕️</button>
+        <button id="sort" onClick={handleSort}>
+          ↕️
+        </button>
       </div>
     </div>
   );
