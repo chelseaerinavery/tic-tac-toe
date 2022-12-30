@@ -36,6 +36,7 @@ button {
     margin-bottom: 10px;
     font-size: 1.5em;
   }
+
   
   .board {
     margin: 20% 0% 20% 0%;
@@ -74,6 +75,7 @@ button {
     align-items:center;
   }
 
-  .status {
+  .game-info ol {
+    list-style: none;
+  } 
 
-  }
