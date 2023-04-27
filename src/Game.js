@@ -48,9 +48,9 @@ export function Game(props) {
       const description =
         i < toggle.length - 1
           ? "Go to move #" +
-            String(toggle.length - (i + 1)) +
-            " at " +
-            toggle[i]
+          String(toggle.length - (i + 1)) +
+          " at " +
+          toggle[i]
           : "Go to game start";
       return (
         <li key={i}>
@@ -103,9 +103,9 @@ export function Game(props) {
         const description =
           i < toggle.length - 1
             ? "Go to move #" +
-              String(toggle.length - (i + 1)) +
-              " at " +
-              toggle[i]
+            String(toggle.length - (i + 1)) +
+            " at " +
+            toggle[i]
             : "Go to game start";
         return (
           <li key={i}>
@@ -143,7 +143,7 @@ export function Game(props) {
   return (
     <div className="game">
       <div className="header">Tic-Tac-Toe</div>
-      <div className="game-board">
+      <div className>
         <Board
           squares={current.squares}
           onClick={(i) => handleClick(i)}
